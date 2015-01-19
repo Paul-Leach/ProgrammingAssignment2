@@ -1,4 +1,4 @@
-## makeCacheMatrix  -- constructor for matrix object with cacheable inverse
+## makeCacheMatrix  -- constructor for a matrix object with cacheable inverse
 
 makeCacheMatrix <- function(x = matrix()) {
   # m is the current value of the inverse if one has been set; initially NULL
@@ -26,11 +26,14 @@ makeCacheMatrix <- function(x = matrix()) {
 ##  using a cached copy if available
 cacheSolve <- function(x, ...) { 
 
+  # get the current value of the inverse
   m <- x$getinv()
+  # if it is not NULL, then use the cached inverse
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
+  # otherwise, get the data, compute the inverse, cache and return it
   data <- x$get()
   m <- solve(data, ...)
   x$setinv(m)
